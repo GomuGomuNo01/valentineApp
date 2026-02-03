@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Valentine 💌</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<a class="skip-link" href="#form">Aller au formulaire</a>
+
+<main class="app" aria-describedby="js-fallback">
+  <p id="js-fallback" class="sr-only">
+    Si JavaScript est désactivé, la partie "NON impossible" ne fonctionnera pas.
+    Tu peux quand même remplir le formulaire ci-dessous.
+  </p>
+
+  <section class="card" id="screen-question" aria-labelledby="title">
+    <header class="header">
+      <p class="kicker">💘 Question très sérieuse (promis)</p>
+      <h1 id="title" class="title">Veux-tu être ma valentine&nbsp;?</h1>
+    </header>
+
+    <div class="cta" role="group" aria-label="Réponse">
+      <button id="yesBtn" class="btn btn-yes" type="button">OUI</button>
+
+      <div class="no-wrap" aria-label="Zone du bouton NON">
+        <button id="noBtn" class="btn btn-no" type="button">NON</button>
+      </div>
+    </div>
+
+    <div class="status" aria-live="polite" aria-atomic="true">
+      <p id="attempts" class="attempts">Tentatives de NON : <strong>0</strong></p>
+      <p id="message" class="message">Allez… réfléchis bien.</p>
+    </div>
+  </section>
+
+  <section class="card" id="screen-form" aria-labelledby="formTitle">
+    <header class="header">
+      <p class="kicker">🥰 On officialise ça !</p>
+      <h2 id="formTitle" class="title">Ta disponibilité</h2>
+      <p class="subtitle">
+        Choisis une date (obligatoire), ajoute une heure si tu veux, et un petit mot.
+      </p>
+    </header>
+
+    <form id="form" class="form" novalidate>
+      <div class="field">
+        <label for="date">Date <span aria-hidden="true">*</span></label>
+        <input id="date" name="date" type="date" required />
+        <p class="hint" id="dateHint">Champ obligatoire.</p>
+      </div>
+
+      <div class="field">
+        <label for="time">Heure (optionnel)</label>
+        <input id="time" name="time" type="time" />
+      </div>
+
+      <div class="field">
+        <label for="note">Message (optionnel)</label>
+        <textarea
+                id="note"
+                name="message"
+                rows="4"
+                placeholder="Ex : J’ai dit oui… mais je veux une glace en échange 🍦"
+        ></textarea>
+      </div>
+
+      <div class="actions">
+        <a
+                id="waLink"
+                class="btn btn-primary is-disabled"
+                href="#"
+                aria-disabled="true"
+                target="_blank"
+                rel="noopener noreferrer"
+        >
+          Envoyer sur WhatsApp
+        </a>
+      </div>
+
+      <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+
+      <noscript>
+        <p class="noscript">
+          JavaScript est désactivé : le lien WhatsApp ne pourra pas pré-remplir ton message automatiquement.
+        </p>
+      </noscript>
+    </form>
+  </section>
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>
