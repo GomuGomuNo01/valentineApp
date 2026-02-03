@@ -1,11 +1,11 @@
 :root {
   --bg1: #fff0f5;
   --bg2: #ffe5ef;
-  --card: rgba(255, 255, 255, 0.82);
+  --card: rgba(255, 255, 255, 0.84);
   --text: #231d25;
-  --muted: rgba(35, 29, 37, 0.75);
+  --muted: rgba(35, 29, 37, 0.76);
   --outline: rgba(35, 29, 37, 0.25);
-  --shadow: 0 20px 60px rgba(24, 12, 18, 0.18);
+  --shadow: 0 18px 55px rgba(24, 12, 18, 0.18);
 
   --yes: #e11d48;
   --yes2: #fb7185;
@@ -16,7 +16,6 @@
 }
 
 * { box-sizing: border-box; }
-
 html, body { height: 100%; }
 
 body {
@@ -63,10 +62,7 @@ body {
   outline-offset: 2px;
 }
 
-/* En mode JS, on évite d'envoyer vers un formulaire caché */
-body.js-enabled:not(.show-form) .skip-link {
-  display: none;
-}
+body.js-enabled:not(.show-form) .skip-link { display: none; }
 
 .app {
   min-height: 100svh;
@@ -80,12 +76,13 @@ body.js-enabled:not(.show-form) .skip-link {
 .card {
   width: min(560px, 100%);
   background: var(--card);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 18px;
+  overflow: visible; /* important : ne coupe pas le NON quand il se déplace */
 }
 
 .header { text-align: center; }
@@ -115,23 +112,24 @@ body.js-enabled:not(.show-form) .skip-link {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
+  align-items: center;
 }
 
-/* Zone de fuite */
 .no-wrap {
   position: relative;
   height: 56px;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
 }
 
+/* Boutons */
 .btn {
   width: 100%;
   min-height: 56px;
   border: 0;
   border-radius: 16px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.08rem;
+  font-weight: 800;
   letter-spacing: 0.02em;
   cursor: pointer;
   transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
@@ -147,6 +145,8 @@ body.js-enabled:not(.show-form) .skip-link {
 }
 
 .btn-yes {
+  position: relative;
+  z-index: 30;
   background: linear-gradient(180deg, var(--yes2), var(--yes));
   color: #fff;
   box-shadow: 0 12px 30px rgba(225, 29, 72, 0.35);
@@ -158,25 +158,27 @@ body.js-enabled:not(.show-form) .skip-link {
   background: linear-gradient(180deg, var(--no2), var(--no));
   color: #fff;
   box-shadow: 0 12px 28px rgba(51, 65, 85, 0.25);
+  z-index: 20;
 
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
+  /* IMPORTANT : on le laisse dans le flow (à côté de OUI) */
+  position: relative;
+
+  /* Transform = déplacement visuel sans casser la mise en page */
+  transform: translate3d(0, 0, 0);
 }
 
-/* Desktop : quand il fuit, il rétrécit pour pouvoir se déplacer */
-.btn-no.is-escaping {
-  width: min(240px, 76%);
+/* Desktop : fuite smooth uniquement sur transform */
+body.js-enabled .btn-no.can-escape {
+  transition: transform 200ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
 }
 
-/* Mobile : NON “impossible” (inactif visuellement) */
 .btn-no.is-disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   filter: grayscale(0.2);
 }
 
+/* Status */
 .status {
   margin-top: 14px;
   border-top: 1px dashed rgba(35, 29, 37, 0.18);
@@ -185,7 +187,6 @@ body.js-enabled:not(.show-form) .skip-link {
 }
 
 .attempts { margin: 0; color: var(--muted); }
-
 .message { margin: 8px 0 0; font-size: 1.02rem; }
 
 /* Form */
@@ -196,8 +197,7 @@ body.js-enabled:not(.show-form) .skip-link {
 }
 
 .field { display: grid; gap: 6px; }
-
-label { font-weight: 650; }
+label { font-weight: 700; }
 
 input, textarea {
   width: 100%;
@@ -228,16 +228,22 @@ input:focus, textarea:focus {
   text-align: center;
 }
 
-.actions .btn { width: min(240px, 100%); }
+.actions .btn { width: min(280px, 100%); }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-
   background: linear-gradient(180deg, #f472b6, #db2777);
   color: #fff;
+  box-shadow: 0 12px 28px rgba(219, 39, 119, 0.22);
+}
+
+.btn-secondary {
+  background: linear-gradient(180deg, #fff, #ffe7f1);
+  color: var(--text);
+  border: 1px solid rgba(35, 29, 37, 0.16);
 }
 
 .is-disabled {
@@ -263,11 +269,13 @@ body.js-enabled.show-form #screen-form { display: block; }
   .app { padding: 26px 18px 34px; }
   .card { padding: 22px; }
   .title { font-size: 1.9rem; }
-  .cta { grid-template-columns: 1fr 1fr; align-items: center; }
+  .cta { grid-template-columns: 1fr 1fr; }
   .no-wrap { height: 60px; }
   .btn { min-height: 60px; }
 }
 
+/* Accessibilité : réduit les transitions si demandé */
 @media (prefers-reduced-motion: reduce) {
+  body.js-enabled .btn-no.can-escape { transition: none; }
   .btn { transition: none; }
 }

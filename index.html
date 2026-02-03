@@ -21,11 +21,13 @@
     <header class="header">
       <p class="kicker">💘 Question très sérieuse (promis)</p>
       <h1 id="title" class="title">Veux-tu être ma valentine&nbsp;?</h1>
+      <p class="subtitle">Tu as le droit d’hésiter… mais pas trop 😌</p>
     </header>
 
     <div class="cta" role="group" aria-label="Réponse">
       <button id="yesBtn" class="btn btn-yes" type="button">OUI</button>
 
+      <!-- Même niveau que OUI, même div (cta). -->
       <div class="no-wrap" aria-label="Zone du bouton NON">
         <button id="noBtn" class="btn btn-no" type="button">NON</button>
       </div>
@@ -85,7 +87,11 @@
 
       <noscript>
         <p class="noscript">
-          JavaScript est désactivé : le lien WhatsApp ne pourra pas pré-remplir ton message automatiquement.
+          JavaScript est désactivé : le lien WhatsApp ne peut pas pré-remplir le message.
+          Tu peux ouvrir WhatsApp ici :
+          <a href="https://wa.me/33744276500" target="_blank" rel="noopener noreferrer">
+            https://wa.me/33744276500
+          </a>
         </p>
       </noscript>
     </form>
